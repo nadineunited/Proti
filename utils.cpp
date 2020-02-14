@@ -30,6 +30,7 @@ uint base_to_uint(char base)
 		case 'S': return 18;		//Serine		Ser									
 		case 'T': return 19;		//Threonine		Thr
 	}
+	return 0;
 }
 
 
@@ -41,7 +42,7 @@ void create_buckets(const string& filename)
     string line;
     vector<ofstream*> super_kmer_files(bucket_number);
 
-    pair<vector<string>,minimizer> super_q_grams;
+    pair<vector<string>,qgram> super_q_grams;
     minimizer index_file;
     for(uint i(0);i<bucket_number;++i)
     {
@@ -56,7 +57,7 @@ void create_buckets(const string& filename)
         ofstream* file_tow = super_kmer_files[index_file];
         for (uint q(0); q < super_q_grams.first.size(); ++q)
         {
-			*file_tow << super_q_grams[q] << endl;
+			*file_tow << super_q_grams.first[q] << endl;
 		}
     }
 }
@@ -71,6 +72,22 @@ string get_line_fasta(ifstream& in)
     return line;
 }
 
+qgram get_minimizer(string& q_gram)
+{
+	string mini("");
+	string current;
+	for (uint i(0); i < q_gram.size() - minimizer_size + 1; ++i)
+	{
+		current = q_gram.substr(i, minimizer_size);
+		if (mini.empty() or current < mini)
+		{
+			mini = current;
+		}
+	}
+	qgram hash(string_to_qgram(mini));
+	return hash;
+}
+
 pair<vector<string>, qgram> get_super_kmers(const string& line)
 {
 	string super_q_gram;
@@ -82,7 +99,7 @@ pair<vector<string>, qgram> get_super_kmers(const string& line)
 	{
 		q_gram = line.substr(i, qgram_size);
 		mini = get_minimizer(q_gram);
-		if (mini != prev_mini or super_q_grams.empty())
+		if (mini != prev_mini or super_q_grams.first.empty())
 		{
 			super_q_grams.first.push_back(q_gram);
 			super_q_grams.second = mini;
@@ -97,32 +114,17 @@ pair<vector<string>, qgram> get_super_kmers(const string& line)
 }
 
 
-qgram string_to_qgram(string& minimizer)
+qgram string_to_qgram(string& mini)
 {
 	qgram hash;
-	for (uint i(0); i < minimizer.size(); ++i){
+	for (uint i(0); i < mini.size(); ++i){
 		hash *= 20;
-		hash += base_to_uint(minimize[i]);
+		hash += base_to_uint(mini[i]);
 	}
 	return hash;
 }
 
-qgram get_minimizer(const string& qgram)
-{
-	string minimizer("");
-	string current;
-	for (uint i(0); i < qgram.size() - minimizer_size + 1; ++i)
-	{
-		current = qgram.substr(i, minimizer_size);
-		if (minimizer.empty() or current < minimizer)
-		{
-			minimizer = current;
-		}
-	}
-	qgram hash(minimizer);
-	
-	return qgram;
-}
+
 
 
 

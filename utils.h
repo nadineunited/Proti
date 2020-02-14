@@ -36,7 +36,7 @@ void create_buckets(const string& filename);
 string get_line_fasta(ifstream& in);
 pair<vector<string>, qgram> get_super_kmers(const string& line);
 qgram get_minimizer(string&);
-void super_kmer_to_buckets(const string& super_kmer_file);
+void super_kmer_to_buckets(const string& super_kmer_file,uint indice);
 qgram string_to_qgram(const string& mini);
 
 #endif

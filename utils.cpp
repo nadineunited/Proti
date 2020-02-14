@@ -72,6 +72,8 @@ string get_line_fasta(ifstream& in)
     return line;
 }
 
+
+
 qgram get_minimizer(string& q_gram)
 {
 	string mini("");
@@ -87,6 +89,8 @@ qgram get_minimizer(string& q_gram)
 	qgram hash(string_to_qgram(mini));
 	return hash;
 }
+
+
 
 pair<vector<string>, qgram> get_super_kmers(const string& line)
 {
@@ -114,6 +118,7 @@ pair<vector<string>, qgram> get_super_kmers(const string& line)
 }
 
 
+
 qgram string_to_qgram(const string& mini)
 {
 	qgram hash;
@@ -129,33 +134,33 @@ qgram string_to_qgram(const string& mini)
 
 
 
-    void super_kmer_to_buckets(const string& super_kmer_file,uint indice)
+void super_kmer_to_buckets(const string& super_kmer_file,uint indice)
+{
+    string line;
+    ifstream in(super_kmer_file);
+    ofstream out("bucket_"+to_string(indice));
+    robin_hood::unordered_map<qgram,bool> amstram;
+    while(not in.eof())
     {
-        string line;
-        ifstream in(super_kmer_file);
-        ofstream out("bucket_"+to_string(indice));
-        robin_hood::unordered_map<qgram,bool> amstram;
-        while(not in.eof())
+        getline(in,line);
+        uint i(0),j(0);
+        for (; i <line.size()-qgram_size;++i)
         {
-            getline(in,line);
-            uint i(0),j(0);
-            for (; i <line.size()-qgram_size;++i)
+            qgram leq(string_to_qgram(line.substr(i, qgram_size)));
+            if(amstram.count(leq)==0)
             {
-                qgram leq(string_to_qgram(line.substr(i, qgram_size)));
-                if(amstram.count(leq)==0)
-                {
 
-                }
-                else
-                {
-                    out<<line.substr(j,i+qgram_size)<<endl;
-                    j=i+1;
-                }
-                amstram[leq]=true;
             }
-            if(j<i)
+            else
             {
                 out<<line.substr(j,i+qgram_size)<<endl;
+                j=i+1;
             }
+            amstram[leq]=true;
+        }
+        if(j<i)
+        {
+            out<<line.substr(j,i+qgram_size)<<endl;
         }
     }
+}

@@ -49,6 +49,7 @@ void create_buckets(const string& filename)
 		ofstream* file = new ofstream("superkmer"+to_string(i));
         super_kmer_files.push_back(file);
     }
+    // write super qgrams in files
     while(not in.eof())
     {
         line=get_line_fasta(in);
@@ -59,6 +60,10 @@ void create_buckets(const string& filename)
         {
 			*file_tow << super_q_grams.first[q] << endl;
 		}
+    }
+    for(uint i(0);i<bucket_number;++i)
+    {
+		super_kmer_to_buckets(super_kmer_files[i], i);
     }
 }
 

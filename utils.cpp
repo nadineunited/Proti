@@ -1,4 +1,7 @@
 #include "utils.h"
+
+
+
 //take an input file and create all the bucket files
 
 
@@ -42,7 +45,7 @@ void create_buckets(const string& filename)
     minimizer index_file;
     for(uint i(0);i<bucket_number;++i)
     {
-		ofstream* file = new ofstream("superkmer"+to_string(i)");
+		ofstream* file = new ofstream("superkmer"+to_string(i));
         super_kmer_files.push_back(file);
     }
     while(not in.eof())
@@ -57,6 +60,8 @@ void create_buckets(const string& filename)
 		}
     }
 }
+
+
 
 string get_line_fasta(ifstream& in)
 {
@@ -91,6 +96,7 @@ pair<vector<string>, qgram> get_super_kmers(const string& line)
 	return super_q_grams;
 }
 
+
 qgram string_to_qgram(string& minimizer)
 {
 	qgram hash;
@@ -117,6 +123,9 @@ qgram get_minimizer(const string& qgram)
 	
 	return qgram;
 }
+
+
+
 
 void super_kmer_to_buckets(const string& super_kmer_file)
 {

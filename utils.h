@@ -1,9 +1,27 @@
-typedef qgram __uint128_t
-typedef minimizer uint32_t
+#include <fstream>
+#include <cstring>
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <chrono>
 
-uint qgram_size;
-uint minimizer_size;
-uint bucket_number;
+
+
+using namespace std;
+
+
+
+typedef  __uint128_t qgram;
+typedef  uint32_t minimizer;
+
+
+
+uint qgram_size(20);
+uint minimizer_size(4);
+uint bucket_number(160000);
+
+
 
 //take an input file and create all the bucket files
 void create_buckets(const string& filename);

@@ -7,10 +7,11 @@ void create_buckets(const string& filename)
 {
     ifstream in(filename);
     string line;
-    ofstream super_kmer_files;
+    vector<ofstream*> super_kmer_files;
     for(uint i(0);i<bucket_number;++i)
     {
-        super_kmer_files.push_back("superkmer"+to_string(i));
+        ofstream* out=new ofstream("superkmer"+to_string(i));
+        super_kmer_files.push_back(out);
     }
     while(not in.eof())
     {
@@ -58,7 +59,7 @@ vector<string> get_super_kmers(const string& line)
 
 
 
-minimizer get_minimizer(const string&)
+minimizer get_minimizer(const string& )
 {
 	string minimizer("");
 	string current;

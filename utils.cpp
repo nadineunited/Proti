@@ -60,6 +60,17 @@ vector<string> get_super_kmers(const string& line)
 
 minimizer get_minimizer(const string&)
 {
+	string minimizer("");
+	string current;
+	for (uint i(0); i < qgram.size() - minimizer_size + 1; ++i)
+	{
+		current = qgram.substr(i, minimizer_size);
+		if (minimizer.empty() or current < minimizer)
+		{
+			minimizer = current;
+		}
+	}
+	return minimizer;
 }
 
 

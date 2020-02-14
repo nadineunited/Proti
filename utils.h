@@ -3,6 +3,7 @@ typedef minimizer uint32_t
 
 uint qgram_size;
 uint minimizer_size;
+uint bucket_number;
 
 //take an input file and create all the bucket files
 void create_buckets(const string& filename);

@@ -63,7 +63,7 @@ void create_buckets(const string& filename)
     }
     for(uint i(0);i<bucket_number;++i)
     {
-		super_kmer_to_buckets(super_kmer_files[i], i);
+		super_kmer_to_buckets("superkmer"+to_string(i), i);
     }
 }
 

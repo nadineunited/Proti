@@ -47,8 +47,19 @@ vector<string> get_super_kmers(const string& line)
 	return super_q_grams;
 }
 
-minimizer get_minimizer(const string&)
+string get_minimizer(const string& qgram)
 {
+	string minimizer("");
+	string current;
+	for (uint i(0); i < qgram.size() - minimizer_size + 1; ++i)
+	{
+		current = qgram.substr(i, minimizer_size);
+		if (minimizer.empty() or current < minimizer)
+		{
+			minimizer = current;
+		}
+	}
+	return minimizer;
 }
 
 void super_kmer_to_buckets(const string& super_kmer_file)

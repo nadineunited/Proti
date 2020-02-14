@@ -17,7 +17,7 @@ using namespace std;
 
 
 
-typedef  __uint128_t qgram;
+typedef  uint64_t qgram;
 typedef  uint32_t minimizer;
 
 
@@ -37,6 +37,6 @@ string get_line_fasta(ifstream& in);
 pair<vector<string>, qgram> get_super_kmers(const string& line);
 qgram get_minimizer(string&);
 void super_kmer_to_buckets(const string& super_kmer_file);
-qgram string_to_qgram(string& mini);
+qgram string_to_qgram(const string& mini);
 
 #endif
